@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>To-Do</title>
+	<link rel="stylesheet" type="text/css" href="./bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="./app.css">
+</head>
+<body>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	    	<p class="navbar-text">To-Do List</p>
+	    </div>
+	  </div>
+	</nav>
+	<div class="main container">
+		<div class="row">
+			<div class="col-xs-4">
+				<p v-show="!list.length">还没有添加任何任务</p>
+				<input class="form-control" type="text" placeholder="请输入" v-on:keyup.enter="addTodo" v-model="todo"><!-- text类型v-model值为输入框中的数据 -->
+			</div>
+			<hr class="col-xs-12">
+			<div class="col-xs-12 status">
+				<a class="btn btn-primary" href="#all" title="未完成任务">共{{allLength}}条任务</a>
+				<a class="btn btn-danger" href="#unfinished" title="未完成任务">{{unfinishedLength}}条未完成任务</a>
+				<a class="btn btn-success" href="#finished" title="已完成任务">{{finishedLength}}条已完成任务</a>
+			</div>
+			<div class="list-group-item col-xs-12" v-for="item in filterList"><!-- 这里事实上定义了数组的每个元素名为item -->
+				<div class="col-xs-4">
+					<input 
+						class="form-control" 
+						type="text" 
+						v-show="item === editTodos" 
+						v-model="item.title" 
+						v-focus="item === editTodos"
+						v-on:blur="editedTodo"
+						v-on:keyup.enter="editedTodo"
+						v-on:keyup.esc="cancelTodo(item)"
+					/>
+				</div>
+				<div class="col-xs-12" v-show="!(item === editTodos)">
+					<input type="checkbox" v-model="item.isChecked"/><!-- checkbox类型的v-model值为TorF -->
+					<!-- <p>{{item.isChecked}}</p> -->
+					<label 
+					v-on:dblclick="editTodo(item)" 
+					v-bind:class="{completed: item.isChecked}"
+					>
+					{{item.title}}
+					</label>
+					<button class="btn btn-danger pull-right" v-on:click="deleteTodo(item)">删除</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="./jquery-3.1.1.js"></script>
+	<script src="./vue.js"></script>
+	<script src="./app.js"></script>
+	<script src="./bootstrap.js"></script>
+</body>
+</html>

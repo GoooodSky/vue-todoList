@@ -1,0 +1,10 @@
+.completed{
+	text-decoration:line-through;
+	color:#ccc;
+}
+.right{
+	float: right;
+}
+.status{
+	margin-bottom: 10px;
+}
